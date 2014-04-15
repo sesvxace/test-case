@@ -1,9 +1,9 @@
 #--
 # Test Case v1.0 by Solistra
-# ==============================================================================
+# =============================================================================
 # 
 # Summary
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #   This script provides a simple unit testing framework for RPG Maker VX Ace
 # with very simple expectation-style formatting for test cases. Essentially,
 # this script allows you to use test-driven development from within RPG Maker
@@ -11,34 +11,33 @@
 # a scripter's tool.
 # 
 # Usage
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #   There is no succinct way to summarize the usage of this script. However,
 # this script is heavily documented with examples if you wish to simply consult
 # the supplied documentation. In addition, a usage tutorial is available at
-# [SES VXA](http://sesvxace.wordpress.com/2014/04/10/a-case-for-unit-testing/).
+# **FIXME: (Add URL).**
 # 
 # License
-# ------------------------------------------------------------------------------
-#   This script is made available under the terms of the MIT Expat license. View
-# [this page](http://sesvxace.wordpress.com/license/) for more information.
+# -----------------------------------------------------------------------------
+#   This script is made available under the terms of the MIT Expat license.
+# View [this page](http://sesvxace.wordpress.com/license/) for more detailed
+# information.
 # 
 # Installation
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #   Place this script below Materials, but above Main and any tests. Place this
 # script below the SES Core (v2.0) if you are using it.
 # 
-#   Place this script above the SES Console if you are using it.
-# 
 #++
 module SES
-  # ============================================================================
+  # ===========================================================================
   # Test
-  # ============================================================================
+  # ===========================================================================
   # Defines management and running of defined subclasses of SES::Test::Case.
   module Test
-    # ==========================================================================
+    # =========================================================================
     # BEGIN CONFIGURATION
-    # ==========================================================================
+    # =========================================================================
     # Whether or not to automatically run all test cases whenever the game is
     # started in test mode.
     AUTO_RUN = true
@@ -47,9 +46,9 @@ module SES
     # your game's root directory.
     # NOTE: External test files must have a '.rb' extension to be loaded.
     TEST_DIR = 'System/Tests'
-    # ==========================================================================
+    # =========================================================================
     # END CONFIGURATION
-    # ==========================================================================
+    # =========================================================================
     # Array of known test cases.
     def self.cases
       @cases ||= []
@@ -93,14 +92,14 @@ module SES
     [:AssertionError, :Skip, :MockError].each do |name|
       const_set(name, Class.new(StandardError))
     end
-    # ==========================================================================
+    # =========================================================================
     # Assertable
-    # ==========================================================================
+    # =========================================================================
     # Defines assertions and refutations available to all objects.
     module Assertable
-      # ========================================================================
+      # =======================================================================
       # Generics
-      # ========================================================================
+      # =======================================================================
       # Asserts the truth of the passed block. Returns 'true' if the passed
       # block evaluates to 'true', raises an AssertionError otherwise.
       def assert(msg = 'Refuted. No message given.')
@@ -112,13 +111,15 @@ module SES
       def refute(msg = 'Asserted. No message given.')
         yield.equal?(false) ? true : raise(SES::Test::AssertionError.new(msg))
       end
-      # ========================================================================
+      # =======================================================================
       # Assertions
-      # ========================================================================
+      # =======================================================================
       # Positive assertion for testing generic object equality. Example:
       #   'Test'.must_equal('Test') # => true
       def must_equal(obj)
-        assert("#{self.inspect} is not equal to #{obj.inspect}."){ self == obj }
+        assert("#{self.inspect} is not equal to #{obj.inspect}.") do
+          self == obj
+        end
       end
       
       # Positive assertion for testing specific object equality. Example:
@@ -129,9 +130,9 @@ module SES
         end
       end
       
-      # Positive assertion for testing comparison operators. Raises an Assertion
-      # error if self does not respond to the given operator or if the given
-      # operator is not a comparison operator. Example:
+      # Positive assertion for testing comparison operators. Raises an
+      # Assertion error if self does not respond to the given operator or if
+      # the given operator is not a comparison operator. Example:
       #   1.must_be(:<, 10) # => true
       def must_be(op, obj)
         assert("#{op} is not a comparison operator.") do
@@ -198,9 +199,9 @@ module SES
           self.kind_of?(obj)
         end
       end
-      # ========================================================================
+      # =======================================================================
       # Refutations
-      # ========================================================================
+      # =======================================================================
       # Negative assertion for testing generic object difference. Example:
       #   1.cannot_equal(2) # => true
       def cannot_equal(obj)
@@ -215,23 +216,27 @@ module SES
         end
       end
       
-      # Negative assertion for testing comparison operators. Raises an Assertion
-      # error if self does not respond to the given operator or if the given
-      # operator is not a comparison operator. Example:
+      # Negative assertion for testing comparison operators. Raises an
+      # Assertion error if self does not respond to the given operator or if
+      # the given operator is not a comparison operator. Example:
       #   1.cannot_be(:>, 10) # => true
       def cannot_be(op, obj)
         assert("#{op} is not a comparison operator.") do
           [:==, :!=, :<, :>, :<=, :>=].any? { |o| o == op }
         end
         must_respond_to(op)
-        refute("#{self.inspect} is #{op} #{obj.inspect}."){ self.send(op, obj) }
+        refute("#{self.inspect} is #{op} #{obj.inspect}.") do
+          self.send(op, obj)
+        end
       end
       
       # Negative assertion for testing if self does not respond to the passed
       # method (method name should be given as a symbol). Example:
       #   'Test'.cannot_respond_to(:pop) # => true
       def cannot_respond_to(sym)
-        refute("#{self.inspect} responds to ##{sym}.") { self.respond_to?(sym) }
+        refute("#{self.inspect} responds to ##{sym}.") do
+          self.respond_to?(sym)
+        end
       end
       
       # Negative assertion for testing if a collection does not include an
@@ -285,9 +290,9 @@ module SES
       # game is being run in test mode.
       Object.send(:include, self) if $TEST
     end
-    # ==========================================================================
+    # =========================================================================
     # DSL
-    # ==========================================================================
+    # =========================================================================
     # A simple DSL for Spec instances.
     module DSL
       # Sets the block to call before each spec is run.
@@ -354,9 +359,9 @@ module SES
       end
       alias :to_s :name
     end
-    # ==========================================================================
+    # =========================================================================
     # Reporter
-    # ==========================================================================
+    # =========================================================================
     # Formats test case information and writes information to a given stream.
     class Reporter
       attr_accessor :stream
@@ -400,19 +405,20 @@ module SES
       
       # Write formatted output to this instance's stream.
       def report(type, *args)
-        return nil unless self.class.respond_to?(type = "format_#{type}".to_sym)
+        return nil if !self.class.respond_to?(type = "format_#{type}".to_sym)
         return_value = self.class.send(type, *args)
         @stream.puts(return_value)
         return_value
       end
     end
-    # ==========================================================================
+    # =========================================================================
     # Case
-    # ==========================================================================
+    # =========================================================================
     # Defines a basic test case. All test cases are subclasses of this class.
     class Case
       class << self
-        # Class instance variable. Determines whether or not to skip this suite.
+        # Class instance variable. Determines whether or not to skip this test
+        # suite.
         attr_accessor :skip
       end
       
@@ -443,8 +449,8 @@ module SES
       
       # Provides specific output directions for each runnable test method. This
       # is defined here to allow redefinition of case output in the Spec class.
-      def report_case(description, *values)
-        reporter.report(:case, name, Reporter.format_desc(description), *values)
+      def report_case(string, *values)
+        reporter.report(:case, name, Reporter.format_desc(string), *values)
       end
       
       # Convenience method allowing individual test methods to be skipped by
@@ -494,9 +500,9 @@ module SES
         self.class.name
       end
     end
-    # ==========================================================================
+    # =========================================================================
     # Spec
-    # ==========================================================================
+    # =========================================================================
     # Specialized subclass of Case for writing specification-style tests.
     class Spec < Case
       extend DSL
@@ -512,9 +518,9 @@ module SES
         reporter.report(:case, name, self.class.descriptions[method], *values)
       end
     end
-    # ==========================================================================
+    # =========================================================================
     # Mock
-    # ==========================================================================
+    # =========================================================================
     # Provides a basic mock object for use in test cases.
     class Mock
       # Instantiate a new mock object with the passed expectations. Consult the
@@ -587,13 +593,13 @@ module SES
         @expected[name] ? true : super
       end
     end
-    # ==========================================================================
+    # =========================================================================
     # Stub
-    # ==========================================================================
+    # =========================================================================
     # Provides the 'stub' method for generating stubs of existing methods.
     module Stub
       # Generates a temporary stub of an existing method used during evaluation
-      # of the passed block, then returns the method back to its original state.
+      # of the passed block, then returns the method to its original state.
       # This is mostly useful for methods which return varying information --
       # for example, Time.now or Kernel.rand. The method with the passed name
       # is 'stubbed' to return the passed value. Example:
@@ -604,7 +610,7 @@ module SES
         begin
           # Generate an alias name and save the singleton (for convenience).
           aliased_name = "ses_testcase_stubbed_#{name}".to_sym
-          singleton    = class << self; self; end
+          singleton    = class << self ; self ; end
           # Create the requested stub and alias the original method to the
           # generated alias name.
           singleton.send(:alias_method, aliased_name, name)
@@ -634,25 +640,25 @@ module SES
     end
   end
 end
-# ==============================================================================
+# =============================================================================
 # DataManager
-# ==============================================================================
+# =============================================================================
 module DataManager
   class << self
     alias :ses_testcase_dm_init :init
   end
   
-  # Aliased to automatically run all test cases if SES::Test::AUTO_RUN is set to
-  # a true value. DataManager's default init class method is run first (which
+  # Aliased to automatically run test cases if SES::Test::AUTO_RUN is set to a
+  # true value. DataManager's default init class method is run first (which
   # allows tests to make use of the standard RGSS3 global variables).
   def self.init(*args, &block)
     ses_testcase_dm_init(*args, &block)
     SES::Test.run if SES::Test::AUTO_RUN && $TEST
   end
 end
-# ==============================================================================
+# =============================================================================
 # Kernel
-# ==============================================================================
+# =============================================================================
 module Kernel
   # Captures standard output written to from the passed block and returns the
   # output written as a string.
