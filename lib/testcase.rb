@@ -15,7 +15,7 @@
 #   There is no succinct way to summarize the usage of this script. However,
 # this script is heavily documented with examples if you wish to simply consult
 # the supplied documentation. In addition, a usage tutorial is available at
-# **FIXME: (Add URL).**
+# [SES VXA](http://sesvxace.wordpress.com/2014/04/10/a-case-for-unit-testing/).
 # 
 # License
 # -----------------------------------------------------------------------------
@@ -608,13 +608,12 @@ module SES
       #   end
       def stub(name, value, &block)
         begin
-          # Generate an alias name and save the singleton (for convenience).
+          # Generate an alias name.
           aliased_name = "ses_testcase_stubbed_#{name}".to_sym
-          singleton    = class << self ; self ; end
           # Create the requested stub and alias the original method to the
           # generated alias name.
-          singleton.send(:alias_method, aliased_name, name)
-          singleton.send(:define_method, name) do
+          singleton_class.send(:alias_method, aliased_name, name)
+          singleton_class.send(:define_method, name) do
             value.respond_to?(:call) ? value.call : value
           end
           # Yield the given block so the stub returns the block's value instead
@@ -623,9 +622,9 @@ module SES
         ensure
           # Clean up the stub's generated alias and reset the stubbed method
           # back to its original state.
-          singleton.send(:undef_method, name)
-          singleton.send(:alias_method, name, aliased_name)
-          singleton.send(:undef_method, aliased_name)
+          singleton_class.send(:undef_method, name)
+          singleton_class.send(:alias_method, name, aliased_name)
+          singleton_class.send(:undef_method, aliased_name)
         end
       end
       
@@ -671,13 +670,11 @@ module Kernel
       $stdout = original_stream
       output_file.close
     end
-    if File.exists?(filename)
-      begin
-        File.open(filename, 'r') { |file| file.read }
-      ensure
-        File.delete(filename)
-      end
-    end
+    begin
+      File.open(filename, 'r') { |file| file.read }
+    ensure
+      File.delete(filename)
+    end if File.exists?(filename)
   end
   alias :capture :capture_output
 end
