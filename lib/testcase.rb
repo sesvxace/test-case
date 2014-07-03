@@ -407,7 +407,7 @@ module SES
       def report(type, *args)
         return nil if !self.class.respond_to?(type = "format_#{type}".to_sym)
         return_value = self.class.send(type, *args)
-        @stream.puts(return_value)
+        @stream.send(:puts, return_value)
         return_value
       end
     end
@@ -661,20 +661,15 @@ end
 module Kernel
   # Captures standard output written to from the passed block and returns the
   # output written as a string.
-  def capture_output(filename = 'stream')
-    begin
-      original_stream = $stdout.dup
-      $stdout = (output_file = File.new(filename, 'w'))
-      yield
-    ensure
-      $stdout = original_stream
-      output_file.close
+  def capture_output
+    stream = ''
+    def stream.write(data)
+      self << data
     end
-    begin
-      File.open(filename, 'r') { |file| file.read }
-    ensure
-      File.delete(filename)
-    end if File.exists?(filename)
+    $stdout = stream
+    yield
+    $stdout = STDOUT
+    stream
   end
   alias :capture :capture_output
 end
