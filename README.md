@@ -1,5 +1,5 @@
 
-Test Case v1.0 by Solistra
+Test Case v1.1 by Solistra
 =============================================================================
 
 Summary
