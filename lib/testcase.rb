@@ -1,5 +1,5 @@
 #--
-# Test Case v1.0 by Solistra
+# Test Case v1.1 by Solistra
 # =============================================================================
 # 
 # Summary
@@ -634,7 +634,7 @@ module SES
     end
     # Register this script with the SES Core if it exists.
     if SES.const_defined?(:Register)
-      Description = Script.new('Test Case', 1.0, :Solistra)
+      Description = Script.new('Test Case', 1.1, :Solistra)
       Register.enter(Description)
     end
   end
