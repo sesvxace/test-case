@@ -469,7 +469,7 @@ module SES
         rescue Skip
           nil
         rescue Exception => ex
-          ex
+          ex.class == AssertionError ? false : ex
         ensure
           teardown if respond_to?(:teardown)
         end
