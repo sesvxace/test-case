@@ -21,13 +21,17 @@ module SES::TestCases
     it 'always skips'  do skip   end # A skipped specification.
     it 'always errors' do 1.skip end # Specification which produces an error.
     it                               # Empty specification. Should be skipped.
+    it 'also always fails' do
+      false.must_be_same_as true
+      return true
+    end # Also a failing specification.
   end
   # ============================================================================
   # FrameworkTest - Unit tests for the SES::Test module.
   # ============================================================================
   class FrameworkTest < SES::Test::Spec
     describe 'Test' do SES::Test end
-
+    
     it '.cases returns an array of test cases' do
       subject.cases.must_include ExampleTest
     end
@@ -117,6 +121,10 @@ module SES::TestCases
     it 'ignores skipped tests' do results[2].must_be_same_as nil       end
     it 'reports erratic tests' do results[3].must_be_kind_of Exception end
     it 'ignores empty tests'   do results[4].must_be_same_as nil       end
+    
+    it 'flunks tests with failed assertions' do
+      results[5].must_be_same_as false
+    end
   end
   # ============================================================================
   # SpecTest - Unit tests for the SES::Test::Spec class.
