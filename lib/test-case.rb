@@ -65,9 +65,10 @@ module SES
     
     # Loads external test cases located in the {SES::Test::TEST_DIR} directory.
     # 
+    # @param forced [Boolean] whether or not to force loading of test cases
     # @return [Boolean] `true` if test cases were loaded, `false` otherwise
-    def self.load_cases
-      return false if @loaded
+    def self.load_cases(forced = false)
+      return false if @loaded && !forced
       Dir.glob(TEST_DIR + '/**/*.rb') { |file| load(file) }
       @loaded = true
     end
