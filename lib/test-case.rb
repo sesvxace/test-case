@@ -477,23 +477,3 @@ module DataManager
     SES::Test.run if SES::Test::AUTO_RUN && $TEST
   end
 end
-# Kernel
-# =============================================================================
-# Methods defined here are automatically available to all Ruby objects.
-module Kernel
-  # Captures standard output written to from the passed block and returns the
-  # output written as a string.
-  # 
-  # @return [String] the captured output
-  def capture_output
-    stream = ''
-    def stream.write(data)
-      self << data
-    end
-    $stdout = stream
-    yield
-    $stdout = STDOUT
-    stream
-  end
-  alias_method :capture, :capture_output
-end
