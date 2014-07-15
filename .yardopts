@@ -1,0 +1,3 @@
+--markup markdown
+--title "SES Test Case Documentation"
+lib/**/*.rb
