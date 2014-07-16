@@ -31,6 +31,9 @@
 # * [Test Case Extensions]
 #   (https://github.com/sesvxace/test-case/tree/master/lib/extensions)
 # 
+#   The Assertions extension, in particular, is highly recommended -- but not
+# strictly necessary in order to write functional unit tests.
+# 
 # License
 # -----------------------------------------------------------------------------
 #   This script is made available under the terms of the MIT Expat license.
