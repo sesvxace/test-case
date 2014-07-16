@@ -1,7 +1,7 @@
 module SES::TestCases
-  # ============================================================================
+  # ===========================================================================
   # ReporterTest - Unit tests for the SES::Test::Reporter class.
-  # ============================================================================
+  # ===========================================================================
   class ReporterTest < SES::Test::Spec
     describe 'Reporter' do SES::Test::Reporter end
     let :instance do subject.new end

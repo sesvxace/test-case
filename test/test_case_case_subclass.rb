@@ -5,9 +5,9 @@ module SES::TestCases
   # Create the generic ExampleTest if it does not yet exist.
   generate_example_case
   
-  # ============================================================================
+  # ===========================================================================
   # CaseSubclassTest - Unit tests for subclasses of SES::Test::Case.
-  # ============================================================================
+  # ===========================================================================
   class CaseSubclassTest < SES::Test::Spec
     describe 'Case Subclass' do CaseSubclassTest end
     let :instance do subject.new end
