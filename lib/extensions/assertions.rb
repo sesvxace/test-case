@@ -378,3 +378,40 @@ module SES
     end
   end
 end
+# Kernel
+# =============================================================================
+# Methods defined here are automatically available to all Ruby objects.
+module Kernel
+  # Positive assertion for testing if the given block raises the given
+  # exception class.
+  # 
+  # @param exception [Exception] the exception class to test for
+  # @raise [Exception] if an exception other than the one tested for is raised
+  # @return [Boolean] `true` if the test passes, `false` otherwise
+  def must_raise(exception = StandardError)
+    yield
+  rescue exception
+    true
+  rescue Exception => ex
+    raise ex
+  else
+    false
+  end
+  
+  # Negative assertion for testing that the given block does not raise the
+  # given exception class.
+  # 
+  # @param exception [Exception] the exception class to test against
+  # @raise [Exception] if an exception other than the one tested against is
+  #   raised
+  # @return [Boolean] `true` if the test passes, `false` otherwise
+  def cannot_raise(exception = StandardError)
+    yield
+  rescue exception
+    false
+  rescue Exception => ex
+    raise ex
+  else
+    true
+  end
+end
