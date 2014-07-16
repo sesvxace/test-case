@@ -1,7 +1,7 @@
 module SES::TestCases
   module TestCase
     def self.generate_example_case
-      return nil if const_defined?(SES::TestCases::ExampleTest)
+      return nil if const_defined?(:ExampleTest)
       eval %Q{
       class ExampleTest < SES::Test::Spec
         describe 'Example'; skip!
