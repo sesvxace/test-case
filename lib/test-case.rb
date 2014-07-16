@@ -17,6 +17,20 @@
 # the supplied documentation. In addition, a usage tutorial is available at
 # [SES VXA](http://sesvxace.wordpress.com/2014/04/10/a-case-for-unit-testing/).
 # 
+#   Note that the usage tutorial for this script makes heavy use of the
+# Assertions extension. Ensure that you are using this extension before you
+# review the tutorial.
+# 
+# Extensions
+# -----------------------------------------------------------------------------
+#   This script only provides the core SES Test Case framework needed to create
+# and run unit tests. In addition to the core framework, there are a number of
+# extensions which have been written to provide enhanced functionality, all of
+# which may be found on GitHub at the following location:
+# 
+# * [Test Case Extensions]
+#   (https://github.com/sesvxace/test-case/tree/master/lib/extensions)
+# 
 # License
 # -----------------------------------------------------------------------------
 #   This script is made available under the terms of the MIT Expat license.
@@ -26,7 +40,7 @@
 # Installation
 # -----------------------------------------------------------------------------
 #   Place this script below Materials, but above Main and any tests. Place this
-# script below the SES Core (v2.0) if you are using it.
+# script below the SES Core (v2.0 or higher) if you are using it.
 # 
 #++
 
