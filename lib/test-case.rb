@@ -70,6 +70,9 @@ module SES
     # END CONFIGURATION
     # =========================================================================
     
+    # Add the configured `TEST_DIR` to the Ruby load path.
+    $LOAD_PATH.unshift(File.expand_path(TEST_DIR))
+    
     # Returns an array of known test cases.
     # 
     # @return [Array<SES::Test::Case, SES::Test::Spec>] an array of known cases
