@@ -31,7 +31,7 @@ which may be found on GitHub at the following location:
 * [Test Case Extensions]
   (https://github.com/sesvxace/test-case/tree/master/lib/extensions)
 
-  The Assertions extension, in particular, is highly recommended -- but not
+The Assertions extension, in particular, is highly recommended -- but not
 strictly necessary in order to write functional unit tests.
 
 License
