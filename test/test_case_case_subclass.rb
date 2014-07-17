@@ -17,7 +17,9 @@ module SES::TestCases
       
       it '#run returns an array of expected values' do
         assert 'Contains a value other than true, false, nil, or Exception.' do
-          results.any? { |value| ![true, false, nil, Exception].include?(value) }
+          results.any? do |value|
+            ![true, false, nil, Exception].include?(value)
+          end
         end
       end
       
@@ -30,9 +32,9 @@ module SES::TestCases
       end
       
       it '#skip raises SES::Test::Skip exception' do
-        begin
+        must_raise(SES::Test::Skip) do
           instance.skip
-        rescue SES::Test::Skip; true else false end
+        end
       end
       
       it 'passes passing tests'  do results[0].must_be_same_as true      end

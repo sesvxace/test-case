@@ -33,9 +33,9 @@ module SES::TestCases
       end
       
       it '.it defines skipped test methods when no block given' do
-        begin
+        must_raise(SES::Test::Skip) do
           instance.test_creates_an_example
-        rescue SES::Test::Skip; true else false end
+        end
       end
       
       it '.it defines test methods with block' do

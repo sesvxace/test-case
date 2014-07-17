@@ -35,10 +35,9 @@ module SES::TestCases
       end
       
       it 'ghosts (generic) raise MockError given unexpected types' do
-        begin
+        must_raise(SES::Test::MockError) do
           subject.expect(:test, 42, String)
           subject.test(:meaning)
-        rescue SES::Test::MockError; true else false
         end
       end
       
@@ -48,10 +47,9 @@ module SES::TestCases
       end
       
       it 'ghosts (specific) raise MockError given unexpected values' do
-        begin
+        must_raise(SES::Test::MockError) do
           subject.expect(:test, 42, 'Meaning of life.')
           subject.test('Meaning of everything.')
-        rescue SES::Test::MockError; true else false
         end
       end
       
@@ -61,10 +59,9 @@ module SES::TestCases
       end
       
       it 'ghosts (validated) raise MockError if values fail validation' do
-        begin
+        must_raise(SES::Test::MockError) do
           subject.expect(:test, true, Numeric) { |i| i < 100 }
           subject.test(100)
-        rescue SES::Test::MockError; true else false
         end
       end
     end
